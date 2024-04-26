@@ -26,4 +26,31 @@ export default {
     },
   },
   plugins: [],
+  // Tworzymy funkcję do generowania tabeli
+function generujTabele() {
+  // Tworzymy element tabeli
+  var tabela = document.createElement('table');
+
+  // Tworzymy pętle do generowania wierszy
+  for (var i = 0; i < 5; i++) {
+      // Tworzymy wiersz
+      var wiersz = tabela.insertRow();
+
+      // Tworzymy pętle do generowania komórek w wierszu
+      for (var j = 0; j < 4; j++) {
+          // Tworzymy komórkę
+          var komorka = wiersz.insertCell();
+
+          // Dodajemy tekst do komórki
+          komorka.textContent = 'Wiersz ' + (i + 1) + ', Kolumna ' + (j + 1);
+      }
+  }
+
+  // Dodajemy tabelę do elementu o id "tabela-container" w HTML
+  document.getElementById('tabela-container').appendChild(tabela);
+}
+
+// Wywołujemy funkcję generującą tabelę po załadowaniu strony
+window.onload = generujTabele;
+
 };
