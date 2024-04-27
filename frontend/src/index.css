@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Warstwa narzędziowa */
 @layer utilities {
   .duration-high {
     @apply transition-all duration-300 ease-in-out;
   }
 }
 
+/* Animacja obracania */
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -20,14 +22,17 @@
   animation: spin 40s linear infinite;
 }
 
-/* smooth scroll*/
+/* Płynne przewijanie */
 html {
   scroll-behavior: smooth;
 }
 
+/* Wybór tekstu */
 ::selection {
   @apply bg-primary text-white;
 }
+
+/* Loader */
 .loader {
   display: flex;
   justify-content: center;
@@ -35,6 +40,7 @@ html {
   height: 100vh;
 }
 
+/* Mniejsze obrazy loadera na urządzeniach o szerokości do 960px */
 @media (max-width: 960px) {
   .loader img {
     height: 320px;
