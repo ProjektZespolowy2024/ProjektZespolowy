@@ -23,4 +23,9 @@ const bookSchema = mongoose.Schema(
   }
 );
 
+// Dodawanie metod niestandardowych do modelu
+bookSchema.statics.findByAuthor = function(author) {
+  return this.find({ author });
+};
+
 export const Book = mongoose.model('Book', bookSchema);
