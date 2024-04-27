@@ -28,4 +28,13 @@ bookSchema.statics.findByAuthor = function(author) {
   return this.find({ author });
 };
 
+bookSchema.statics.findByPublishYear = function(publishYear) {
+  return this.find({ publishYear });
+};
+
+// Dodawanie walidacji
+bookSchema.path('publishYear').validate((value) => {
+  return value >= 1500;
+}, 'Invalid publish year');
+
 export const Book = mongoose.model('Book', bookSchema);
