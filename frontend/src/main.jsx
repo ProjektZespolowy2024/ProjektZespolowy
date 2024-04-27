@@ -7,6 +7,9 @@ import { SnackbarProvider } from "notistack";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+// Dodatkowa komenda do wyłączenia ostrzeżeń w trybie rozwojowym
+ReactDOM.setBatchingImplementation('ReactDOM.unstable_batchedUpdates');
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <SnackbarProvider>
