@@ -4,51 +4,33 @@ import mongoose from 'mongoose';
 import booksRoute from './routes/booksRoute.js';
 import cors from 'cors';
 
-const router = express.Router();
+const app = express();
 
-// Endpoint do tworzenia nowej książki
-router.post('/', async (req, res) => {
-  try {
-    const { title, author, pages } = req.body;
-    const newBook = new Book({ title, author, pages });
-    const savedBook = await newBook.save();
-    res.status(201).json(savedBook);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+// Połączenie z bazą danych MongoDB
+mongoose.connect(mongoDBURL, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => console.log('Connected to MongoDB'));
+
+// Dodanie middleware do obsługi danych w formacie JSON
+app.use(express.json());
+
+// Dodanie middleware do obsługi żądań z różnych źródeł (CORS)
+app.use(cors());
+
+// Funkcja middleware do logowania żądań HTTP
+const loggerMiddleware = (req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+};
+
+// Dodanie middleware do routera
+app.use(loggerMiddleware);
+
+// Dodanie routera dla książek
+app.use('/books', booksRoute);
+
+// Serwer nasłuchujący na podanym porcie
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
-// Endpoint do pobierania wszystkich książek
-router.get('/', async (req, res) => {
-  try {
-    const books = await Book.find();
-    res.json(books);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Endpoint do aktualizacji danych książki
-router.put('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { title, author, pages } = req.body;
-    const updatedBook = await Book.findByIdAndUpdate(id, { title, author, pages }, { new: true });
-    res.json(updatedBook);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Endpoint do usuwania książki
-router.delete('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    await Book.findByIdAndDelete(id);
-    res.json({ message: 'Book deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-export default router;
