@@ -13,6 +13,9 @@ const bookSchema = mongoose.Schema(
     publishYear: {
       type: Number,
       required: true,
+      validate: {
+        validator: (value) => value >= 1500,
+        message: 'Invalid publish year',
     },
   },
   {
