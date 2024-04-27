@@ -37,4 +37,7 @@ bookSchema.path('publishYear').validate((value) => {
   return value >= 1500;
 }, 'Invalid publish year');
 
+// Indeksowanie dla wyszukiwania pełnotekstowego
+bookSchema.index({ title: 'text', description: 'text' });
+
 export const Book = mongoose.model('Book', bookSchema);
