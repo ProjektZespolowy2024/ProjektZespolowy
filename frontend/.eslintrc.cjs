@@ -1,5 +1,8 @@
 /* eslint-env node */
 
+// Dodatkowa komenda do wyłączenia ostrzeżeń dotyczących reakcji odświeżania
+process.env.DISABLE_NEW_JSX_TRANSFORM = 'true';
+
 module.exports = {
   env: { browser: true, es2020: true },
   extends: [
